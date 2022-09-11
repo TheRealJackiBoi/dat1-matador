@@ -5,20 +5,35 @@ public class Main {
 
     public static void main(String[] args) {
 
-        ArrayList<Player> players = createPlayers();
-
         Integer tiles = 40;
 
-        String[] propertyNames = {"Rødovrevej", "Hvidovrevej", "Scandlines", "Roskildevej", "Valby Langgade", "Allégade", "Frederiksberg Allé", "Squash", "Bülowsvej", "Gl. Kongevej", "Mols-Linjen", "Bernstorffsvej", "Hellerupvej", "Strandvejen", "Parkering", "Trianglen", "Østerbrogade", "Grønningen", "Scandlines2", "Bredgade", "Kgs. Nytorv", "Coca Cola", "Østergade", "Amagertorv", "Vimmelskaftet", "Nygade", "Scandlines3", "Frederiksberggade", "Rådhuspladsen"};
+        //Creating the players from the input of their names
+        ArrayList<Player> players = createPlayers();
+
+
+
+        //Creating properties for the board
+        String[] propertyNames = {"Rødovrevej", "Hvidovrevej", "Roskildevej", "Valby Langgade", "Allégade", "Frederiksberg Allé", "Bülowsvej", "Gl. Kongevej", "Bernstorffsvej", "Hellerupvej", "Strandvejen", "Trianglen", "Østerbrogade", "Grønningen", "Bredgade", "Kgs. Nytorv", "Østergade", "Amagertorv", "Vimmelskaftet", "Nygade", "Frederiksberggade", "Rådhuspladsen"};
 
         ArrayList<Property> properties = new ArrayList<>();
 
+        for (int i = 0; i < propertyNames.length; i++) {
+            Property newProperty = new Property(propertyNames[i], 2000 + i * 100,  200 + i * 100, 2000, 5000);
+
+            properties.add(newProperty);
+        }
+
+        //Display all the players
         for (Player player:
              players) {
             player.displayStats();
             System.out.println("");
         }
 
+        //Display all properties
+        for ( Property property : properties ) {
+            property.displayProperty();
+        }
 
     }
 

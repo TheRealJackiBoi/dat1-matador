@@ -25,16 +25,10 @@ public class Player {
         if ( properties.size() > 0) {
             System.out.println("Properties: ");
             for (Property prop : properties) {
-                System.out.println(prop);
+                System.out.println(prop.getName());
             }
         } else System.out.println(name  + " owns no properties");
         System.out.println("");
-    }
-
-    public void buyProperty(Property newProperty) {
-        money -= newProperty.getPrice();
-
-        properties.add(newProperty);
     }
 
 
@@ -56,5 +50,12 @@ public class Player {
 
     public ArrayList<Property> getProperties() {
         return properties;
+    }
+
+
+    public void buyProperty(Property newProperty) {
+        money -= newProperty.getPrice();
+
+        properties.add(newProperty);
     }
 }
