@@ -58,4 +58,8 @@ public class Player {
 
         properties.add(newProperty);
     }
+
+    public void move(int totalMoves) {
+        position += totalMoves;
+    }
 }

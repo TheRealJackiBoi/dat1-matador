@@ -1,16 +1,11 @@
 import java.util.ArrayList;
 import java.util.Scanner;
-
+import java.util.Random;
 public class Main {
 
     public static void main(String[] args) {
 
         Integer tiles = 40;
-
-        //Creating the players from the input of their names
-        ArrayList<Player> players = createPlayers();
-
-
 
         //Creating properties for the board
         String[] propertyNames = {"Rødovrevej", "Hvidovrevej", "Roskildevej", "Valby Langgade", "Allégade", "Frederiksberg Allé", "Bülowsvej", "Gl. Kongevej", "Bernstorffsvej", "Hellerupvej", "Strandvejen", "Trianglen", "Østerbrogade", "Grønningen", "Bredgade", "Kgs. Nytorv", "Østergade", "Amagertorv", "Vimmelskaftet", "Nygade", "Frederiksberggade", "Rådhuspladsen"};
@@ -23,16 +18,24 @@ public class Main {
             properties.add(newProperty);
         }
 
-        //Display all the players
-        for (Player player:
-             players) {
-            player.displayStats();
-            System.out.println("");
-        }
 
-        //Display all properties
-        for ( Property property : properties ) {
-            property.displayProperty();
+
+        //Creating the players from the input of their names
+        ArrayList<Player> players = createPlayers();
+
+        // game loop
+        boolean game = true;
+
+        printWelcome();
+        while(game) {
+
+            for (Player player :
+                    players) {
+                playerTurn(player, properties);
+            }
+
+
+            game = false;
         }
 
     }
@@ -55,4 +58,55 @@ public class Main {
         return players;
     }
 
+    public static void printWelcome() {
+        System.out.println("------------------------------------------------------");
+        System.out.println("                      Matador");
+        System.out.println("------------------------------------------------------");
+
+    }
+
+
+    public static int rollDice() {
+        Random rand = new Random();
+        return rand.nextInt(6) + 1;
+    }
+
+    public static void playerTurn(Player p, ArrayList<Property> properties) {
+        Scanner playerInput = new Scanner(System.in);
+        int dice1 = rollDice();
+        int dice2 = rollDice();
+        
+        int moves = dice1 + dice2;
+        
+        p.move(moves);
+
+        properties.get(p.getPosition()).displayProperty();
+
+        //check if property is owned, if not ask if user wanna buy, else if owned, pay rent to owning player
+        if ( !properties.get(p.getPosition()).isOwned() ) {
+            System.out.println("Do you wanna buy this property? y/n");
+            String input = playerInput.nextLine();
+            //buy
+            if (input == "y") {
+                p.buyProperty(properties.get(p.getPosition()));
+                properties.get(p.getPosition()).buy(p.getName());
+            }
+            //don't buy
+            else if (input == "n") {
+                System.out.println("You choose to not buy "  + properties.get(p.getPosition()).getName());
+            }
+            //invalid answer
+            else {
+                System.out.println("Invalid input");
+            }
+        }
+        //pay rent
+        else {
+
+        }
+
+
+
+    }
 }
+
