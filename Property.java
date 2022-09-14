@@ -29,6 +29,10 @@ public class Property {
         return owned;
     }
 
+    public String getOwnerName() {
+        return ownerName;
+    }
+
     public int getPrice() {
         return price;
     }

@@ -31,7 +31,7 @@ public class Main {
 
             for (Player player :
                     players) {
-                playerTurn(player, properties);
+                playerTurn(player, players, properties);
             }
 
 
@@ -71,7 +71,7 @@ public class Main {
         return rand.nextInt(6) + 1;
     }
 
-    public static void playerTurn(Player p, ArrayList<Property> properties) {
+    public static void playerTurn(Player p, ArrayList<Player> players, ArrayList<Property> properties) {
         Scanner playerInput = new Scanner(System.in);
         int dice1 = rollDice();
         int dice2 = rollDice();
@@ -80,20 +80,21 @@ public class Main {
         
         p.move(moves);
 
-        properties.get(p.getPosition()).displayProperty();
+        Property landedOnProp = properties.get(p.getPosition());
+        landedOnProp.displayProperty();
 
         //check if property is owned, if not ask if user wanna buy, else if owned, pay rent to owning player
-        if ( !properties.get(p.getPosition()).isOwned() ) {
-            System.out.println("Do you wanna buy this property? y/n");
-            String input = playerInput.nextLine();
+        if ( !landedOnProp.isOwned() ) {
+            System.out.println("Do you wanna buy this property? yes = 1 / no = 0");
+            int in = playerInput.nextInt();
             //buy
-            if (input == "y") {
-                p.buyProperty(properties.get(p.getPosition()));
-                properties.get(p.getPosition()).buy(p.getName());
+            if (in == 1) {
+                p.buyProperty(landedOnProp);
+                landedOnProp.buy(p.getName());
             }
             //don't buy
-            else if (input == "n") {
-                System.out.println("You choose to not buy "  + properties.get(p.getPosition()).getName());
+            else if (in == 0) {
+                System.out.println("You choose to not buy "  + landedOnProp.getName());
             }
             //invalid answer
             else {
@@ -102,11 +103,27 @@ public class Main {
         }
         //pay rent
         else {
+            String owner = landedOnProp.getOwnerName();
+            getPlayerFromArray(owner, players);
+
+
 
         }
 
 
 
     }
+
+    static public Player getPlayerFromArray(String owner, ArrayList<Player> players) {
+        for (int i = 0; i < players.size(); i++) {
+            if (players.get(i).getName() == owner) {
+                return  players.get(i);
+            }
+        }
+        return null;
+    }
 }
+
+
+
 
