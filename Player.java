@@ -3,6 +3,8 @@ import java.util.ArrayList;
 public class Player {
 
     private int money = 0;
+
+    private boolean bankrupt = false;
     private ArrayList<Property> properties = new ArrayList<>();
     private int position = 0;
     private int lap = 0;
@@ -36,6 +38,10 @@ public class Player {
         return money;
     }
 
+    public boolean isBankrupt() {
+        return bankrupt;
+    }
+
     public int getPosition() {
         return position;
     }
@@ -61,5 +67,22 @@ public class Player {
 
     public void move(int totalMoves) {
         position += totalMoves;
+    }
+
+    public void earnMoney(int amount) {
+        money += amount;
+        System.out.println( name + " earned " + amount + "kr.");
+        System.out.println( "Player balance: " + money);
+        System.out.println("");
+    }
+
+    public void pay(int amount) {
+        money -= amount;
+        System.out.println(name + " payed " + amount + "kr.");
+        System.out.println("");
+    }
+
+    public void goneBankrupt() {
+        bankrupt = true;
     }
 }

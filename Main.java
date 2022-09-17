@@ -104,9 +104,19 @@ public class Main {
         //pay rent
         else {
             String owner = landedOnProp.getOwnerName();
-            getPlayerFromArray(owner, players);
+            Player ownerOfProperty = getPlayerFromArray(owner, players);
 
 
+            if (isEnoughAmount(p, landedOnProp.getRentRate())) {
+                ownerOfProperty.earnMoney(landedOnProp.getRentRate());
+                p.useMoney(landedOnProp.getRentRate());
+            }
+            else {
+                p.goneBankrupt();
+                ownerOfProperty.earnMoney(p.getMoney());
+
+                //get properties and changes p's properies owner names
+            }
 
         }
 
@@ -121,6 +131,15 @@ public class Main {
             }
         }
         return null;
+    }
+
+    public static boolean isEnoughAmount(Player p, int rentRate) {
+        if (p.getMoney() > rentRate) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }
 
